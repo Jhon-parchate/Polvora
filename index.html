@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Pólvora</title>
+    <link rel="stylesheet" href="css/re.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="pyro-background"></div>
+    <div class="container">
+        <div class="sparkle-border"></div>
+        <div class="icon-header">
+            <i class="fas fa-fire"></i>
+            <i class="fas fa-bomb"></i>
+            <i class="fas fa-explosion"></i>
+            <i class="fas fa-meteor"></i>
+        </div>
+        <h1>Registro</h1>
+        <form action="php/registro.php" method="POST">
+            <div class="input-group">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <button type="submit">
+                Registrarse
+                <i class="fas fa-rocket"></i>
+            </button>
+        </form>
+        <div class="login-link">
+            <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Crear iconos flotantes en el fondo
+        function createFloatingIcons() {
+            const background = document.querySelector('.pyro-background');
+            const icons = [
+                'fa-bomb', 'fa-fire', 'fa-explosion', 
+                'fa-rocket', 'fa-sparkles', 'fa-burst',
+                'fa-fire-flame-curved', 'fa-meteor'
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const icon = document.createElement('i');
+                icon.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} floating-icon`;
+                icon.style.left = `${Math.random() * 100}%`;
+                icon.style.top = `${Math.random() * 100}%`;
+                icon.style.fontSize = `${Math.random() * (1.5 - 0.8) + 0.8}rem`;
+                icon.style.animationDelay = `${Math.random() * 5}s`;
+                background.appendChild(icon);
+            }
+        }
+
+        // Crear decoraciones en las esquinas
+        function createCornerDecorations() {
+            const container = document.querySelector('.container');
+            const corners = [
+                { top: '10px', left: '10px' },
+                { top: '10px', right: '10px' },
+                { bottom: '10px', left: '10px' },
+                { bottom: '10px', right: '10px' }
+            ];
+            
+            corners.forEach(pos => {
+                const decoration = document.createElement('i');
+                decoration.className = 'fas fa-fire corner-decoration';
+                Object.assign(decoration.style, pos);
+                container.appendChild(decoration);
+            });
+        }
+
+        createFloatingIcons();
+        createCornerDecorations();
+
+        // Efecto de explosión al hacer clic en el botón
+        document.querySelector('button').addEventListener('mousedown', function(e) {
+            const explosion = document.createElement('div');
+            explosion.style.position = 'absolute';
+            explosion.style.left = e.clientX + 'px';
+            explosion.style.top = e.clientY + 'px';
+            explosion.style.transform = 'translate(-50%, -50%)';
+            explosion.innerHTML = '<i class="fas fa-burst" style="color: var(--accent-color); font-size: 2rem;"></i>';
+            document.body.appendChild(explosion);
+            
+            setTimeout(() => explosion.remove(), 1000);
+        });
+    </script>
+</body>
+</html>
